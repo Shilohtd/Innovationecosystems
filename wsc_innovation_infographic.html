@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West South-Central Innovation Economy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .infographic {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #008080 0%, #20b2aa 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.4em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section {
+            padding: 40px 30px;
+            border-bottom: 3px solid #f0f8f8;
+        }
+        
+        .section-title {
+            font-size: 2.2em;
+            color: #008080;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #008080, #20b2aa);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid #e6f7f7;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #008080, #20b2aa);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .investment-flows {
+            background: linear-gradient(135deg, #f0f8f8 0%, #e6f7f7 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .flow-map {
+            text-align: center;
+            font-size: 1.2em;
+            color: #008080;
+            font-weight: bold;
+            padding: 40px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #008080;
+        }
+        
+        .sector-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .sector-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .sector-label {
+            width: 180px;
+            font-weight: bold;
+            color: #008080;
+            font-size: 0.95em;
+        }
+        
+        .bar-container {
+            flex: 1;
+            height: 30px;
+            background: #f0f8f8;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .bar {
+            height: 100%;
+            border-radius: 15px;
+            transition: width 2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .bar-regional { background: linear-gradient(90deg, #008080, #20b2aa); }
+        .bar-national { background: linear-gradient(90deg, #66c2c2, #99d6d6); }
+        
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .company-card {
+            background: linear-gradient(135deg, #f0f8f8 0%, #e6f7f7 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #008080;
+            transition: all 0.3s ease;
+        }
+        
+        .company-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,128,128,0.2);
+        }
+        
+        .company-name {
+            font-weight: bold;
+            color: #008080;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        
+        .company-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .state-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .texas { background: #e3f2fd; color: #1976d2; }
+        .louisiana { background: #f3e5f5; color: #7b1fa2; }
+        .oklahoma { background: #e8f5e8; color: #388e3c; }
+        .arkansas { background: #fff3e0; color: #f57c00; }
+        
+        .employment-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .employment-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .state-name {
+            width: 120px;
+            font-weight: bold;
+            color: #008080;
+            font-size: 1.1em;
+        }
+        
+        .employment-value {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+            min-width: 80px;
+        }
+        
+        .research-institutions {
+            background: linear-gradient(135deg, #f0f8f8 0%, #e6f7f7 100%);
+            padding: 25px;
+            border-radius: 15px;
+        }
+        
+        .institutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .institution {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #008080;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .institution-name {
+            font-weight: bold;
+            color: #008080;
+            margin-bottom: 5px;
+        }
+        
+        .institution-location {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            text-align: center;
+            background: linear-gradient(135deg, #008080, #20b2aa);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,128,128,0.3);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .section {
+                padding: 30px 20px;
+            }
+            
+            .sector-label {
+                width: 140px;
+                font-size: 0.85em;
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="infographic">
+        <header class="header">
+            <h1>West South-Central Innovation Economy</h1>
+            <p class="subtitle">Arkansas • Louisiana • Oklahoma • Texas</p>
+        </header>
+        
+        <section class="section">
+            <h2 class="section-title">Investment Flows & Regional Attraction</h2>
+            <div class="investment-flows">
+                <div class="flow-map">
+                    📈 Major Investment Flows from CA, NY, PA, MA, and other innovation hubs<br>
+                    💰 Attracting $1M+ investments across multiple sectors<br>
+                    🎯 Building a robust Innovation Economy ecosystem
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Key Investment Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-number">513K+</div>
+                    <div class="stat-label">VC-Backed Jobs (2022)</div>
+                </div>
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-number">$6.5B+</div>
+                    <div class="stat-label">Total VC Investment</div>
+                </div>
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Key Sectors</div>
+                </div>
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-number">14</div>
+                    <div class="stat-label">Major Research Institutions</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Investment by Sector (2019-2024)</h2>
+            <div class="card">
+                <div class="sector-chart">
+                    <div class="sector-bar">
+                        <div class="sector-label">Energy (Oil, Gas, Renewables)</div>
+                        <div class="bar-container">
+                            <div class="bar bar-regional" style="width: 95%;">95</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar bar-national" style="width: 50%;">50</div>
+                        </div>
+                    </div>
+                    <div class="sector-bar">
+                        <div class="sector-label">Tech & Software</div>
+                        <div class="bar-container">
+                            <div class="bar bar-regional" style="width: 40%;">40</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar bar-national" style="width: 80%;">80</div>
+                        </div>
+                    </div>
+                    <div class="sector-bar">
+                        <div class="sector-label">Manufacturing</div>
+                        <div class="bar-container">
+                            <div class="bar bar-regional" style="width: 65%;">65</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar bar-national" style="width: 70%;">70</div>
+                        </div>
+                    </div>
+                    <div class="sector-bar">
+                        <div class="sector-label">Logistics & Infrastructure</div>
+                        <div class="bar-container">
+                            <div class="bar bar-regional" style="width: 55%;">55</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar bar-national" style="width: 40%;">40</div>
+                        </div>
+                    </div>
+                    <div class="sector-bar">
+                        <div class="sector-label">Medical/Biotech</div>
+                        <div class="bar-container">
+                            <div class="bar bar-regional" style="width: 30%;">30</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar bar-national" style="width: 55%;">55</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px; font-size: 0.9em;">
+                    <div><span style="display: inline-block; width: 20px; height: 15px; background: linear-gradient(90deg, #008080, #20b2aa); margin-right: 8px; border-radius: 3px;"></span>LA/TX/OK/AR Regional</div>
+                    <div><span style="display: inline-block; width: 20px; height: 15px; background: linear-gradient(90deg, #66c2c2, #99d6d6); margin-right: 8px; border-radius: 3px;"></span>U.S. Overall</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Major VC-Backed Companies</h2>
+            <div class="companies-grid">
+                <div class="company-card animate-on-scroll">
+                    <div class="company-name">Workrise</div>
+                    <div class="company-value">$817M</div>
+                    <div class="state-indicator texas">Texas</div>
+                </div>
+                <div class="company-card animate-on-scroll">
+                    <div class="company-name">Saronic Technologies</div>
+                    <div class="company-value">$845M</div>
+                    <div class="state-indicator texas">Texas</div>
+                </div>
+                <div class="company-card animate-on-scroll">
+                    <div class="company-name">Island</div>
+                    <div class="company-value">$800M</div>
+                    <div class="state-indicator texas">Texas</div>
+                </div>
+                <div class="company-card animate-on-scroll">
+                    <div class="company-name">Cart.com</div>
+                    <div class="company-value">$779M</div>
+                    <div class="state-indicator texas">Texas</div>
+                </div>
+                <div class="company-card animate-on-scroll">
+                    <div class="company-name">Maritime Partners</div>
+                    <div class="company-value">$751M</div>
+                    <div class="state-indicator louisiana">Louisiana</div>
+                </div>
+                <div class="company-card animate-on-scroll">
+                    <div class="company-name">Securonix</div>
+                    <div class="company-value">$1257M</div>
+                    <div class="state-indicator texas">Texas</div>
+                </div>
+                <div class="company-card animate-on-scroll">
+                    <div class="company-name">Airtime (Essential Video Tools)</div>
+                    <div class="company-value">$234M</div>
+                    <div class="state-indicator arkansas">Arkansas</div>
+                </div>
+                <div class="company-card animate-on-scroll">
+                    <div class="company-name">Camp Pickle</div>
+                    <div class="company-value">$200M</div>
+                    <div class="state-indicator arkansas">Arkansas</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">VC-Backed Employment by State (2022)</h2>
+            <div class="card">
+                <div class="employment-bars">
+                    <div class="employment-bar">
+                        <div class="state-name">Texas</div>
+                        <div class="employment-value">456,454</div>
+                        <div class="bar-container">
+                            <div class="bar bar-regional" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="employment-bar">
+                        <div class="state-name">Louisiana</div>
+                        <div class="employment-value">29,666</div>
+                        <div class="bar-container">
+                            <div class="bar bar-regional" style="width: 6.5%;"></div>
+                        </div>
+                    </div>
+                    <div class="employment-bar">
+                        <div class="state-name">Oklahoma</div>
+                        <div class="employment-value">20,424</div>
+                        <div class="bar-container">
+                            <div class="bar bar-regional" style="width: 4.5%;"></div>
+                        </div>
+                    </div>
+                    <div class="employment-bar">
+                        <div class="state-name">Arkansas</div>
+                        <div class="employment-value">7,407</div>
+                        <div class="bar-container">
+                            <div class="bar bar-regional" style="width: 1.6%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Major Research Institutions</h2>
+            <div class="research-institutions">
+                <p style="text-align: center; margin-bottom: 20px; font-size: 1.1em; color: #008080; font-weight: bold;">
+                    14 World-Class Research Centers Driving Innovation
+                </p>
+                <div class="institutions-grid">
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">Baylor College of Medicine</div>
+                        <div class="institution-location">Houston, TX</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">University of Texas at Austin</div>
+                        <div class="institution-location">Austin, TX</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">Texas A&M University</div>
+                        <div class="institution-location">College Station, TX</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">Galveston National Laboratory (UTMB)</div>
+                        <div class="institution-location">Galveston, TX</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">Texas Biomedical Research Institute</div>
+                        <div class="institution-location">San Antonio, TX</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">J.J. Pickle Research Campus (UT Austin)</div>
+                        <div class="institution-location">Austin, TX</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">Louisiana State University (LSU)</div>
+                        <div class="institution-location">Baton Rouge, LA</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">Tulane University</div>
+                        <div class="institution-location">New Orleans, LA</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">Pennington Biomedical Research Center</div>
+                        <div class="institution-location">Baton Rouge, LA</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">University of Oklahoma</div>
+                        <div class="institution-location">Norman, OK</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">National Weather Center (NOAA + OU)</div>
+                        <div class="institution-location">Norman, OK</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">Robert S. Kerr Environmental Research Center</div>
+                        <div class="institution-location">Ada, OK</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">University of Arkansas</div>
+                        <div class="institution-location">Fayetteville, AR</div>
+                    </div>
+                    <div class="institution animate-on-scroll">
+                        <div class="institution-name">FDA National Center for Toxicological Research</div>
+                        <div class="institution-location">Jefferson, AR</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Innovation Ecosystem Hubs</h2>
+            <div class="grid grid-3">
+                <div class="card animate-on-scroll">
+                    <h3 style="color: #008080; margin-bottom: 15px;">🎯 Austin-Dallas Corridor</h3>
+                    <p>Joint investment/research hub connecting major Texas cities with strong tech and energy focus</p>
+                </div>
+                <div class="card animate-on-scroll">
+                    <h3 style="color: #008080; margin-bottom: 15px;">🔬 Houston Biomedical Hub</h3>
+                    <p>World-class medical research with Baylor College of Medicine and Texas Medical Center</p>
+                </div>
+                <div class="card animate-on-scroll">
+                    <h3 style="color: #008080; margin-bottom: 15px;">🌊 Louisiana Energy Innovation</h3>
+                    <p>Maritime Partners and energy sector leadership in New Orleans and Baton Rouge</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="footer">
+            <p>Data Sources: Natural Earth, NVCA Analysis, Company filings, PitchBook, STATE_VC_JOB_GROWTH.xlsx</p>
+            <p style="margin-top: 10px; opacity: 0.8;">West South-Central Innovation Economy • 2019-2024 Analysis</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Animate elements on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        };
+        
+        // Initialize animations when page loads
+        document.addEventListener('DOMContentLoaded', animateOnScroll);
+        
+        // Add hover effects to cards
+        document.querySelectorAll('.card, .company-card, .institution').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
